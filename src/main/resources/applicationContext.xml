@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+	 http://www.springframework.org/schema/context
+	 http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	<bean name="dataSource" class="org.apache.commons.dbcp.BasicDataSource" >
+		<!--spring整合mybatis-->
+		<!--1.定义数据源组件c3p0  作用：用于连接数据库-->
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/user?useUnicode=true&amp;characterEncoding=utf-8"/>
+		<property name="username" value="root"/>
+		<property name="password" value="root"/>
+	</bean>
+	<bean  name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!--指定数据源-->
+		<property name="dataSource" ref="dataSource"/>
+		<!--指定mybatis的配置文件-->
+		<property name="configLocation" value="classpath:mybatis-config.xml"/>
+	</bean>
+	<!--3.spring接管dao层组件 (理解为创建dao层实现类的对象)
+      注意:1. sql映射的命名空间必需是接口的限定名，持久化操作的id值必需和接口方法中相同
+             2. 动态生成实现类的bean对象id值，就是接口名称首字母小写
+    -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!--指定sqlSessionFactory对象-->
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+		<!--扫描dao层接口，动态生成实现类的对象-->
+		<property name="basePackage" value="red.kalos.usersystem.dao"/>
+	</bean>
+	<context:component-scan base-package="red.kalos.usersystem.service.impl"/>
+
+
+
+</beans>
+

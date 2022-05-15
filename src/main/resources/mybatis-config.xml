@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!--配置实体类型的别名-->
+	<typeAliases>
+		<!--给某个实体取别名
+		<typeAlias type="com.team.entity.Students" alias="Students"></typeAlias>
+	-->
+	<!--给某个包下的所有实体取别名  注意:别名就是类名-->
+		<package name="red.kalos.usersystem.entity"/>
+	</typeAliases>
+
+	<!--分页插件-->
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor"/>
+	</plugins>
+
+	<!-- 加载sql映射文件 -->
+	<mappers>
+	   <!--以包的方式加载所有的sql映射时，需要保证接口的名称与sql映射文件的名称相同-->
+		<package name="red.kalos.usersystem.mapper"/>
+	</mappers>
+
+</configuration>
